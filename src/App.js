@@ -1,13 +1,32 @@
 import React from 'react';
-import { Switch, Route } from 'react-router';
+import PropTypes from 'prop-types';
+import { Switch, Route, Redirect } from 'react-router';
+import { compose, getContext, withProps } from 'recompose';
 import * as screens from 'screens';
+import { SideBar } from 'components';
 
-const App = () => (
-	<div>
+import './style.scss';
+
+const App = ({ pathname }) => (
+	<div className="app-layout">
+		<SideBar path={pathname} />
     <Switch>
-      <Route path="/" component={screens.HomeScreen} />
+      <Route path="/about" component={screens.HomeScreen} />
+			<Route path="/archive" component={() => <div>Archive</div>} />
+			<Route path="/" component={() => <Redirect from="/" to="/about" />} />
     </Switch>
 	</div>
 );
 
-export default App;
+App.propTypes = {
+  pathname: PropTypes.string.isRequired,
+};
+
+export default compose(
+	getContext({
+		router: PropTypes.object,
+	}),
+	withProps(({ router }) => ({
+		pathname: router.route.location.pathname,
+	})),
+)(App);

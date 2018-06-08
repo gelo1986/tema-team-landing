@@ -1,8 +1,10 @@
 var path = require('path');
 var webpack = require('webpack');
+var PrepackWebpackPlugin = require('prepack-webpack-plugin').default;
 const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
 module.exports = {
+  mode: 'development',
   entry: [
     'react-hot-loader/patch',
     // activate HMR for React
