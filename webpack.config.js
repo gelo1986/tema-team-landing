@@ -1,6 +1,5 @@
-var path = require('path');
-var webpack = require('webpack');
-var PrepackWebpackPlugin = require('prepack-webpack-plugin').default;
+const path = require('path');
+const webpack = require('webpack');
 const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
 module.exports = {
@@ -27,7 +26,7 @@ module.exports = {
 
     path: path.resolve(__dirname, 'dist'),
 
-    publicPath: '/static/'
+    publicPath: '/static/',
     // necessary for HMR to know where to load the hot update chunks
   },
 
@@ -36,15 +35,13 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.md/,
+        use: 'raw-loader',
+      },
+      {
         test: /\.js?$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
-      },
-      {
-        test: /\.json$/,
-        use: [
-          'json-loader',
-        ],
       },
       {
         test: /\.css$/,
